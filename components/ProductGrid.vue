@@ -5,9 +5,9 @@
       :key="product.id"
       class="catalog__item"
     >
-      <a
-        href="#"
+      <nuxt-link
         class="catalog__image-wrapper"
+        :to="`/product/${product.id}`"
       >
         <div class="catalog__image-wrap">
           <img
@@ -16,7 +16,7 @@
             :alt="product.title"
           >
         </div>
-      </a>
+      </nuxt-link>
       <p class="catalog__title">
         {{ product.title }}
       </p>
@@ -31,7 +31,7 @@
 import { mapGetters } from 'vuex';
 
 export default {
-    name: 'ProductGrid',
+  name: 'ProductGrid',
 
   computed: {
     ...mapGetters({
