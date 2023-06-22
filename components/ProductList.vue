@@ -50,7 +50,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     box-shadow: 0px 5px 7px -2px $border-color;
     border-radius: 18px;
     background-color: $background-item;

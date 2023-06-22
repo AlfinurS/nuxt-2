@@ -20,15 +20,15 @@
             class="btn btn-primary"
             @click="setGrid"
           >
-            Список
+            <iconBtnList />
           </button>
           
           <button
             v-else
             class="btn btn-primary"
             @click="setGrid"
-          > 
-            Плитка
+          >
+            <iconBtnGrid />
           </button>
         </div>
       </div>
@@ -45,7 +45,9 @@ import Vue from 'vue'
 import axios from 'axios'
 import { mapActions, mapGetters } from 'vuex'
 import Pagination from '~/components/Pagination.vue'
-import type { paginationType } from "@/types/common"
+import iconBtnGrid from '~/components/icons/iconBtnGrid.vue'
+import iconBtnList from '~/components/icons/iconBtnList.vue'
+import type { paginationType, productType } from "@/types/common"
 
 const initPaginationData = (): paginationType => ({
   page: 1,
@@ -54,7 +56,7 @@ const initPaginationData = (): paginationType => ({
 });
 
 export default Vue.extend({
-  components: { Pagination },
+  components: { Pagination, iconBtnGrid, iconBtnList },
   name: 'IndexPage',
   data () {
     return {
@@ -77,11 +79,10 @@ export default Vue.extend({
       setFilteredProducts: 'Products/setFilteredProducts',
     }),
 
-    loadProducts() {
+    loadProducts(): void {
       const url = 'https://fakestoreapi.com/products';
-      const params = {};
-      axios.get(url, { params })
-        .then(({ data }) => {
+      axios.get(url)
+        .then(({ data }: {data: productType[]}) => {
           this.setProducts(data);
           this.paginationData.count = data.length;
           this.filterProducts();

@@ -63,12 +63,19 @@ export default {
     grid-template-rows: 100px;
     justify-items: center;
     justify-content: center;
-    max-width: 200px;
+    max-width: 300px;
+    margin-bottom: 20px;
     width: 100%;
     box-shadow: 1px 5px 7px -2px $border-color;
     border-radius: 18px;
     background-color: $background-item;
     padding: 32px 18px;
+      @media (min-width: 838px) {
+        max-width: 340px;
+    }
+      @media (min-width: 1320px) {
+        max-width: 380px;
+    }
   }
   &__image {
     position: absolute;

@@ -29,15 +29,15 @@ export default {
   props: {
     width: {
       type: [Number, String],
-      default: 18,
+      default: 24,
     },
     height: {
       type: [Number, String],
-      default: 18,
+      default: 24,
     },
     viewBox: {
       type: String,
-      default: "0 0 18 18",
+      default: "0 0 24 24",
     },
     id: {
       type: String,

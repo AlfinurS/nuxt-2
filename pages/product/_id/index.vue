@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="goods">
     <div class="goods__box">
       <nuxt-link
         class="goods__nav"
@@ -14,7 +14,7 @@
         v-if="currentProduct"
         class="goods__item"
       >
-        <a
+        <div
           href="#"
           class="goods__image-wrapper"
         >
@@ -25,7 +25,7 @@
               :alt="currentProduct.title"
             >
           </div>
-        </a>
+        </div>
         
         <ul class="goods__content">
           <li class="goods__content-item">
@@ -86,7 +86,7 @@ export default Vue.extend({
 
   data() {
     return {
-      productId: this.$route.params.id,
+      productId: this.$route.params.id as string,
     };
   },
 
@@ -115,11 +115,10 @@ export default Vue.extend({
       setProducts: 'Products/setProducts',
     }),
 
-    loadProducts() {
+    loadProducts(): void {
       const url = 'https://fakestoreapi.com/products';
-      const params = {};
-      axios.get(url, { params })
-        .then(({ data }) => {
+      axios.get(url)
+        .then(({ data }: {data: productType[]}) => {
           this.setProducts(data);
         })
         .catch(error => {
@@ -138,6 +137,8 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .goods {
+  margin-left: 20px;
+  margin-right: 20px;
   &__box {
     margin-top: 40px;
   }
@@ -197,6 +198,7 @@ export default Vue.extend({
     }
   }
   &__content {
+    padding: 0;
     @media (min-width: 730px) {
     width: 100%;
     max-width: 666px;
