@@ -1,6 +1,15 @@
 <template>
   <div>
     <div class="goods__box">
+      <nuxt-link
+        class="goods__nav"
+        :to="`/`"
+      >
+        <div class="btn btn-primary">
+          Каталог
+        </div>
+      </nuxt-link>
+
       <div
         v-if="currentProduct"
         class="goods__item"
@@ -17,23 +26,47 @@
             >
           </div>
         </a>
-        <p class="goods__title">
-          {{ currentProduct.title }}
-        </p>
+        
+        <ul class="goods__content">
+          <li class="goods__content-item">
+            <div class="goods__title">
+              <span class="">Product name</span>
+            </div>
+            <div class="goods__text">
+              {{ currentProduct.title }}
+            </div>
+          </li>
       
-        <p class="goods__text goods__text-accent">
-          {{ currentProduct.rating.rate }}
-        </p>
-      
-        <p class="goods__text">
-          {{ currentProduct.description }}
-        </p>
+          <li class="goods__content-item">
+            <div class="goods__title">
+              <span class="">Product rating</span>
+            </div>
+            <div class="goods__text goods__text-accent">
+              <span class="goods__text">Rating</span>
+              {{ currentProduct.rating.rate }}
+              <span class="goods__text">out of 5</span>
+            </div>
+          </li>
 
-        <p class="goods__text-accent">
-          {{ currentProduct.price }} $
-        </p>
+          <li class="goods__content-item">
+            <div class="goods__title">
+              <span class="">Product description</span>
+            </div>
+            <div class="goods__text">
+              {{ currentProduct.description }}
+            </div>
+          </li>
+
+          <li class="goods__content-item">
+            <div class="goods__title">
+              <span class="">Product price</span>
+            </div>
+            <div class="goods__text goods__text-accent">
+              {{ currentProduct.price }} $
+            </div>
+          </li>
+        </ul>
       </div>
-
 
       <div v-else>
         Нет данных
@@ -112,11 +145,18 @@ export default Vue.extend({
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 30px;
     margin-bottom: 40px;
     box-shadow: 0px 5px 7px -2px $border-color;
     border-radius: 18px;
     background-color: $background-item;
     padding: 32px 18px;
+      @media (min-width: 748px) {
+        flex-direction: row;
+      }
+      @media (min-width: 1200px) {
+        flex-direction: row;
+      }
   }
   
   &__image {
@@ -138,30 +178,39 @@ export default Vue.extend({
     }
   }
   &__title {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 600;
-    text-transform: uppercase;
-    color: $color-text;
-    margin-right: 18px;
-    margin-left: 18px;
-    text-align: center;
-    @media (min-width: 748px) {
-      text-align: left;
-    }
+    color: $disabled-text;
+    text-align: left;
+    margin-top: 12px;
+    margin-bottom: 8px;
   }
   &__text {
     font-size: 14px;
     font-weight: 400;
     color: $color-text;
-    margin-right: 18px;
-    margin-left: 18px;
-    text-align: center;
-    @media (min-width: 748px) {
-      text-align: left;
-    }
+    text-align: left;
     &-accent {
-      color: $accent-accent;
+      color: $el-color-red;
+      font-size: 16px;
+      font-weight: 600;
     }
+  }
+  &__content {
+    @media (min-width: 730px) {
+    width: 100%;
+    max-width: 666px;
+    padding-left: 16px;
+    padding-right: 16px;
+    box-sizing: border-box;
+    }
+    &-item {
+      margin-bottom: 16px;
+    }
+  }
+  &__nav {
+    display: flex;
+    justify-content: flex-end;
   }
 }
 </style>

@@ -5,9 +5,12 @@ body {
 }
 
 a {
-  text-decoration-line: none !important;
+  text-decoration-line: none;
   display: block;
   line-height: 0px;
+}
+ol, ul {
+	list-style: none;
 }
 .button {
   &__wrapper {
@@ -104,7 +107,7 @@ a {
     color: $color-primary-focus !important;
   }
   &--red {
-    color: $accent-accent;
+    color: $el-color-red;
     &:hover {
       color: $el-color-red;
     }
