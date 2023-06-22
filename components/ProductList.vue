@@ -48,9 +48,19 @@ export default {
   }
   &__item {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     margin-bottom: 40px;
+    box-shadow: 0px 5px 7px -2px $border-color;
+    border-radius: 18px;
+    background-color: $background-item;
+    padding: 32px 18px;
+      @media (min-width: 748px) {
+        flex-direction: row;
+      }
+      @media (min-width: 1200px) {
+        flex-direction: row;
+      }
   }
   
   &__image {
@@ -72,21 +82,12 @@ export default {
     }
   }
   &__title {
-    width: 100%;
-    max-width: 480px;
-    font-size: 13px;
-    font-weight: 400;
-    text-transform: uppercase;
-    color: $disabled-text;
-    margin-left: 30px;
-  }
-  &__price {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 19px;
-    text-transform: uppercase;
-    color: $el-color-red;
-    margin-left: 30px;
+    margin-right: 18px;
+    margin-left: 18px;
+    text-align: center;
+    @media (min-width: 748px) {
+      text-align: left;
+    }
   }
 }
 </style>

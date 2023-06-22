@@ -24,6 +24,8 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": 0,
     'vue/multi-word-component-names': 'off',
     "vue/order-in-components": 0,
+    "vue/require-explicit-emits": 0,
+    "vue/v-on-event-hyphenation": 0,
   },
   settings: {
     'import/resolver': {

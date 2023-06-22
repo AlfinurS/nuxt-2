@@ -5,16 +5,32 @@
         v-model="search"
         type="text"
         class="catalog__search-input input"
-        placeholder="Поиск задачи"
-        @input="filterProducts"
+        placeholder="Поиск товара"
+        @input="searchProducts"
       >
-      <div class="">
-        <button
-          class="btn btn-primary"
-          @click="setGrid"
-        >
-          Списком
-        </button>
+      <div class="catalog__head-btns">
+        <Pagination
+          :params="paginationData"
+          class="catalog__pagination"
+          @setPage="handleCurrentChange"
+        />
+        <div class="">
+          <button
+            v-if="isGrid"
+            class="btn btn-primary"
+            @click="setGrid"
+          >
+            Список
+          </button>
+          
+          <button
+            v-else
+            class="btn btn-primary"
+            @click="setGrid"
+          > 
+            Плитка
+          </button>
+        </div>
       </div>
     </div>
     <div class="catalog__body">
@@ -28,53 +44,74 @@
 import Vue from 'vue'
 import axios from 'axios'
 import { mapActions, mapGetters } from 'vuex'
+import Pagination from '~/components/Pagination.vue'
+import type { paginationType } from "@/types/common"
+
+const initPaginationData = (): paginationType => ({
+  page: 1,
+  page_size: 10,
+  count: 0,
+});
 
 export default Vue.extend({
+  components: { Pagination },
   name: 'IndexPage',
   data () {
     return {
       isGrid: false,
-      search: ''
+      search: '',
+      paginationData: initPaginationData() as paginationType,
     }
   },
 
   computed: {
     ...mapGetters({
       products: 'Products/products',
-      filteredPoducts: 'Products/products'
+      filteredPoducts: 'Products/filteredPoducts'
     })
   },
 
   methods: {
     ...mapActions({
       setProducts: 'Products/setProducts',
-      setFilteredProducts: 'Products/setFilteredProducts'
+      setFilteredProducts: 'Products/setFilteredProducts',
     }),
 
-    loadProducts () {
-      const url = 'https://fakestoreapi.com/products'
-      const params = {}
+    loadProducts() {
+      const url = 'https://fakestoreapi.com/products';
+      const params = {};
       axios.get(url, { params })
         .then(({ data }) => {
-          this.setProducts(data)
-          this.setFilteredProducts(this.search)
+          this.setProducts(data);
+          this.paginationData.count = data.length;
+          this.filterProducts();
         })
         .catch(error => {
-          console.log(error)
+          console.log(error);
         })
     },
 
-    filterProducts () {
-      this.setFilteredProducts(this.search)
+    searchProducts() {
+      this.filterProducts();
     },
 
-    setGrid () {
-      this.isGrid = !this.isGrid
-    }
+    filterProducts() {
+      this.setFilteredProducts({search: this.search, params: this.paginationData});
+    },
+
+    setGrid() {
+      this.isGrid = !this.isGrid;
+    },
+
+    // пагинация смена страницы
+    handleCurrentChange(val: number) {
+      this.paginationData.page = val;
+      this.filterProducts();
+    },
   },
 
   mounted () {
-    this.loadProducts()
+    this.loadProducts();
   }
 })
 </script>
@@ -93,6 +130,9 @@ export default Vue.extend({
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    &-btns {
+      display: flex;
+    }
   }
   &__search {
     &-input {
@@ -100,6 +140,9 @@ export default Vue.extend({
       width: 100%;
       margin-right: 20px;
     }
+  }
+  &__pagination {
+    margin-right: 20px;
   }
 }
 </style>

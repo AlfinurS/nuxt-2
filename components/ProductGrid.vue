@@ -1,10 +1,28 @@
 <template>
-  <div>
+  <div class="catalog__grid">
     <div
       v-for="product in products"
       :key="product.id"
+      class="catalog__item"
     >
-      <p>{{ product.title }}</p>
+      <a
+        href="#"
+        class="catalog__image-wrapper"
+      >
+        <div class="catalog__image-wrap">
+          <img
+            class="catalog__image"
+            :src="product.image"
+            :alt="product.title"
+          >
+        </div>
+      </a>
+      <p class="catalog__title">
+        {{ product.title }}
+      </p>
+      <p class="catalog__price">
+        {{ product.price }} $
+      </p>
     </div>
   </div>
 </template>
@@ -22,3 +40,56 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+
+.catalog {
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
+    margin-top: 20px;
+      @media (min-width: 748px) {
+      grid-template-columns: 1fr 1fr;
+      gap: 18px; 
+    }
+      @media (min-width: 1200px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+  &__item {
+    display: grid;
+    grid-template-rows: 100px;
+    justify-items: center;
+    justify-content: center;
+    max-width: 200px;
+    width: 100%;
+    box-shadow: 1px 5px 7px -2px $border-color;
+    border-radius: 18px;
+    background-color: $background-item;
+    padding: 32px 18px;
+  }
+  &__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    object-fit: cover;
+    &-wrapper {
+      width: 60px;
+    }
+    &-wrap {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      padding-bottom: 116%;
+    }
+  }
+  &__title {
+    text-align: center;
+  }
+}
+</style>

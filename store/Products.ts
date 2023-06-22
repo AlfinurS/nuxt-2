@@ -1,9 +1,13 @@
+import { filterByPagination } from "@/utils/filter"
+import { deepCompareObject } from "@/utils/deepCompareObject"
+
 export const actions = {
   setProducts({ commit }, products) {
     commit('SET_PRODUCTS', products);
   },
-  setFilteredProducts({ commit }, products) {
-    commit('SET_FILTERED_PRODUCTS', products);
+
+  setFilteredProducts({ commit }, filterParams) {
+    commit('SET_FILTERED_PRODUCTS', filterParams);
   },
 };
 
@@ -11,18 +15,18 @@ export const mutations = {
   SET_PRODUCTS(state, products) {
     state.products = JSON.parse(JSON.stringify(products));
   },
-  SET_FILTERED_PRODUCTS(state, search) {
+
+  SET_FILTERED_PRODUCTS(state, {search, params}) {
     if (search !== '') {
-      const regexp = new RegExp(search, 'i');
       const filtered = state.products.filter(
         (product) => {
-          //bypassObject(product, search);
-          return regexp.test(product.title) || regexp.test(product.category);
+          return deepCompareObject(product, search);
         },
       );
-      state.filteredPoducts = JSON.parse(JSON.stringify(filtered));
+      params.count = filtered.length;
+      state.filteredPoducts = JSON.parse(JSON.stringify(filterByPagination(filtered, params)));
     } else {
-      state.filteredPoducts = JSON.parse(JSON.stringify(state.products));
+      state.filteredPoducts = JSON.parse(JSON.stringify(filterByPagination(state.products, params)));
     }
   },
 };
@@ -36,9 +40,3 @@ export const state = () => ({
   products: [],
   filteredPoducts: [],
 });
-
-const bypassObject = (objOrString, search) => {
-  const regexp = new RegExp(search, 'i');
-  if (typeof objOrString === 'string') return regexp.test(objOrString);
-  console.log(objOrString);
-};
