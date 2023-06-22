@@ -25,10 +25,10 @@
 </template>
 
 <script lang="ts">
-import { PropType } from "vue";
+import Vue, { PropType } from "vue";
 import type { paginationType } from "@/types/common"
 
-export default {
+export default Vue.extend({
   name: 'Pagination',
   props: {
     params: {
@@ -43,7 +43,7 @@ export default {
 
   computed: {
     // общее количество страниц
-    pagesCounter(): number {
+    pagesCounter() {
       if (this.params.count === 0) return 1;
       return Math.ceil(this.params.count / this.params.page_size);
     }
@@ -64,7 +64,7 @@ export default {
       this.setPage(this.params.page + 1);
     },
   },
-};
+})
 </script>
 
 <style lang="scss" scoped>
